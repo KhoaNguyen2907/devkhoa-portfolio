@@ -1,6 +1,6 @@
 # General Settings
 title = "devkhoa - Personal dev works"
-baseURL = "https://devkhoa.com/" #YOUR SITE URL
+baseURL = "http://devkhoa-portfolio.s3-website-ap-southeast-1.amazonaws.com/" #YOUR SITE URL
 languageCode = "en-us"
 theme = "luique"
 resourceDir = "resources"
