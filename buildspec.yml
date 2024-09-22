@@ -1,0 +1,37 @@
+version: 0.2
+
+env:
+  variables:
+    HUGO_VERSION: "0.101.0"  # Specify the Hugo version you're using
+    S3_BUCKET: "devkhoa-portfolio"  # Replace with your S3 bucket name
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14  # You can adjust this version if needed
+    commands:
+      - echo Installing Hugo...
+      - curl -L https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz | tar -xz
+      - mv hugo /usr/local/bin/hugo
+      - hugo version
+
+  pre_build:
+    commands:
+      - echo In pre_build phase...
+      - echo Current directory is $PWD
+      - ls -la
+
+  build:
+    commands:
+      - echo Building Hugo site...
+      - hugo --minify
+
+  post_build:
+    commands:
+      - echo Uploading to S3...
+      - aws s3 sync public/ s3://${S3_BUCKET}/ --delete
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: public
